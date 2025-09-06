@@ -19,18 +19,20 @@ jobs:
         dotnet-version: '9.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore COP.sln
+      run: dotnet restore Cop.sln
 
     - name: Build
-      run: dotnet build COP.sln --no-restore --configuration Release
+      run: dotnet build Cop.sln --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test COP.sln --no-build --verbosity normal --configuration Release
+      run: dotnet test Cop.sln --no-build --verbosity normal --configuration Release
 
     - name: Pack NuGet Package
       run: |
         $env:VERSION = "1.0.${{ github.run_number }}-${{ github.sha }}"
-        dotnet pack COP/Api/Api.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
+        dotnet pack Cop/Api/Api.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
+        dotnet pack Cop/Processor/Processor.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
+        dotnet pack Cop/Tests/Tests.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
 
     - name: Upload NuGet Package Artifact
       uses: actions/upload-artifact@v4
