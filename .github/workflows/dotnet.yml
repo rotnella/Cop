@@ -39,21 +39,24 @@ jobs:
         name: nuget-packages
         path: ./nupkgs/*.nupkg
     
-    - name: Add GitHub Packages source
-      run: dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name github --username ${{ github.repository_owner }} --password ${{ secrets.BneGames_Package_Publish }} --store-password-in-clear-text
-
-    - name: Show working directory
-      run: pwd
-
-    - name: List nupkgs directory
-      run: ls ./nupkgs
+    - name: Configure GitHub Packages
+      run: |
+        dotnet nuget remove source github --non-interactive || true
+        dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" `
+          --name github `
+          --username ${{ github.repository_owner }} `
+          --password ${{ secrets.BneGames_Package_Publish }} `
+          --store-password-in-clear-text
       
     - name: Push NuGet packages
       run: |
-        Get-ChildItem ./nupkgs/*.nupkg | ForEach-Object {
-          dotnet nuget push $_.FullName --api-key ${{ secrets.BneGames_Package_Publish }} --source "github"
+        $packages = Get-ChildItem ./nupkgs/*.nupkg
+        foreach ($package in $packages) {
+          Write-Host "Publishing package: $($package.Name)"
+          dotnet nuget push $package.FullName --source "github" --skip-duplicate
         }
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.BneGames_Package_Publish }}
+        DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
 
 
