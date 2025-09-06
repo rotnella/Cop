@@ -42,14 +42,14 @@ jobs:
     - name: Configure GitHub Packages
       run: |
         dotnet nuget remove source github
-        dotnet nuget add source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --name github --username ${{ github.repository_owner }} --password ${{ secrets.BneGames_Package_Publish }} --store-password-in-clear-text
+        dotnet nuget add source "https://www.nuget.org/${{ github.repository_owner }}/index.json" --name "nuget" --username ${{ github.repository_owner }} --password ${{ secrets.BneGames_Package_Publish }} --store-password-in-clear-text
       
     - name: Push NuGet packages
       run: |
         $packages = Get-ChildItem ./nupkgs/*.nupkg
         foreach ($package in $packages) {
           Write-Host "Publishing package: $($package.Name)"
-          dotnet nuget push $package.FullName --api-key ${{ secrets.BneGames_Package_Publish }} --source "github" --skip-duplicate
+          dotnet nuget push $package.FullName --api-key "${{ secrets.BneGames_Package_Publish }}" --source "nuget" --skip-duplicate
         }
       env:
         GITHUB_TOKEN: ${{ secrets.BneGames_Package_Publish }}
