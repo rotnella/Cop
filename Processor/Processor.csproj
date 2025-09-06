@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <RootNamespace>BnEGames.Cop.Processor</RootNamespace>
+    <Nullable>enable</Nullable>
+  <AssemblyName>BnEGamesCopProcessor</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <ProjectReference Include="..\Api\Api.csproj" />
+  </ItemGroup>
+</Project>
