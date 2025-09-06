@@ -39,3 +39,8 @@ jobs:
       with:
         name: nuget-packages
         path: ./nupkgs/*.nupkg
+
+    - name: Publish to GitHub Packages
+      run: dotnet nuget push ./nupkgs/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
