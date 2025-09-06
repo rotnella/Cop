@@ -32,7 +32,6 @@ jobs:
         $env:VERSION = "1.0.${{ github.run_number }}-${{ github.sha }}"
         dotnet pack ./Api/Api.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
         dotnet pack ./Processor/Processor.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
-        dotnet pack ./Tests/Tests.csproj --configuration Release -p:PackageVersion=$env:VERSION -o ./nupkgs
 
     - name: Upload NuGet Package Artifact
       uses: actions/upload-artifact@v4
@@ -45,5 +44,8 @@ jobs:
 
     - name: Push NuGet packages
       run: dotnet nuget push ./nupkgs/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       working-directory: Cop
 
+    
