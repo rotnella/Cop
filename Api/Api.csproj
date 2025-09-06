@@ -3,8 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <RootNamespace>BnEGames.Cop.Api</RootNamespace>
+    <RootNamespace>BnEGames.Cop.Api</RootNamespace>
     <Nullable>enable</Nullable>
-  <AssemblyName>BnEGamesCopApi</AssemblyName>
+    <AssemblyName>BnEGamesCopApi</AssemblyName>
+    <PackageId>BnEGames.Cop.Api</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>BnEGames</Authors>
+    <Company>BnEGames</Company>
+    <Description>COP API library</Description>
+    <RepositoryUrl>https://github.com/BnEGames/COP</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/BnEGames/COP</PackageProjectUrl>
   </PropertyGroup>
 </Project>
