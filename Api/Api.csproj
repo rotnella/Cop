@@ -11,7 +11,15 @@
     <Authors>BnEGames</Authors>
     <Company>BnEGames</Company>
     <Description>COP API library</Description>
-    <RepositoryUrl>https://github.com/BnEGames/COP</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/BnEGames/COP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rotnella/COP</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/rotnella/COP</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
