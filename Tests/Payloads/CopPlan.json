@@ -1,0 +1,28 @@
+{
+  "title": "Example Workflow",
+  "operations": [
+    {
+      "id": "xxx",
+      "type": "RequestParameters",
+      "payload": {
+        "cxh-puid": "30232",
+        "cxh-country": "US"
+      }
+    },
+    {
+      "id": "xyz",
+      "type": "Fake.Cop",
+      "parameters": {
+        "puid": "@<xxx::payload.cxh-puid>"
+      }
+    },
+    {
+      "id": "puid.equal",
+      "type": "BnEGames.Cop.Processor.Operation.EqOperation",
+      "payload": {
+        "values": [ "@<xxx::payload.cxh-puid>", "@<xyz::parameters.puid>" ],
+        "action": "Puid's are equal"
+      }
+    }
+  ]
+}

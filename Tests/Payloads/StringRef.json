@@ -1,0 +1,24 @@
+{
+  "title": "Example Workflow",
+  "operations": [
+    {
+      "id": "xxx",
+      "type": "RequestParameters",
+      "payload": {
+        "cxh-puid": "30232",
+        "cxh-country": "US"
+      }
+    },
+    {
+      "id": "xyz",
+      "type": "NoOpOperation",
+      "parameters": {
+        "puid": "@<xxx::payload.cxh-puid>",
+        "puidWithSuffix": "@<xxx::payload.cxh-puid>suffix",
+        "puidWithPrefix": "prefix@<xxx::payload.cxh-puid>",
+        "puidWithPrefixAndSuffix": "prefix@<xxx::payload.cxh-puid>suffix",
+        "entireOperation": "@<xxx::/>"
+      }
+    }
+  ]
+}
