@@ -25,7 +25,7 @@ jobs:
       run: dotnet build COP.sln --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test COP.sln --no-build --verbosity normal
+      run: dotnet test COP.sln --no-build --verbosity normal --configuration Release
 
     - name: Pack NuGet Package
       run: |
