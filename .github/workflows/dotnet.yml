@@ -49,9 +49,11 @@ jobs:
       run: ls ./nupkgs
       
     - name: Push NuGet packages
-      run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      run: |
+        Get-ChildItem ./nupkgs/*.nupkg | ForEach-Object {
+          dotnet nuget push $_.FullName --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+        }
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      working-directory: ./
 
 
