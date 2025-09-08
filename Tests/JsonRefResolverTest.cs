@@ -29,6 +29,8 @@ namespace BnEGames.Cop.Tests
             string json = ReadFile("CopPlan.json");
             JContainer container = JObject.Parse(json);
             copProcessor.Process(container);
+            string result = container.ToString();
+            Assert.NotNull(result);
         }
 
         [Fact]
