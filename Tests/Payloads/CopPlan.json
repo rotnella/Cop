@@ -23,6 +23,14 @@
         "values": [ "@<xxx::payload.cxh-puid>", "@<xyz::parameters.puid>" ],
         "action": "Puid's are equal"
       }
+    },
+    {
+      "id": "result.equal",
+      "type": "BnEGames.Cop.Processor.Operation.EqOperation",
+      "payload": {
+        "values": [ "@<puid.equal::result.IsEqual>", true ],
+        "action": "Puid's are equal"
+      }
     }
   ]
 }

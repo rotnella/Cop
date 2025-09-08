@@ -53,32 +53,44 @@ namespace BnEGames.Cop.Processor.Json
             return idToObjectMap[id];
 
         }
-        public JToken VerifyRef(JToken referencedObject, string refPath)
+        public (JToken token, bool isPending) VerifyRef(JToken referencedObject, string refPath)
         {
             //we have the object, but we need the field from the refPath, path is after :: in the reference
             if (refPath == null)
             {
                 if (_ignoreOnBadRefPath)
                 {
-                    return null;
+                    return (null, false);
                 }
 
                 throw new ArgumentException($"refPath is null within {referencedObject.ToString()}");
             }
             if(refPath == "/")
             {
-                return referencedObject;
+                return (referencedObject, false);
             }
+
+            // Special handling for result references - if the path starts with "result" and the token doesn't exist,
+            // we consider it a pending operation rather than an error
+            bool isResultRef = refPath.StartsWith("result", StringComparison.OrdinalIgnoreCase);
+
             try
             {
-                return referencedObject.SelectToken("$." +refPath, errorWhenNoMatch: true);
+                var token = referencedObject.SelectToken("$." + refPath, errorWhenNoMatch: true);
+                return (token, false);
             }
-            catch (JsonException e)
+            catch (JsonException)
             {
+                if (isResultRef)
+                {
+                    // Return null with isPending=true to indicate we need to wait for this result
+                    return (null, true);
+                }
+
                 if (_ignoreOnBadRefPath)
                 {
                     //add log listener
-                    return null;
+                    return (null, false);
                 }
                 else
                 {

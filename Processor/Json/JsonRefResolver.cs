@@ -124,11 +124,19 @@ namespace BnEGames.Cop.Processor.Json
             if (refObject == null)
                 return false;
 
-            JToken referencedValueAtPath = _verifier.VerifyRef(refObject, referringObjectRef.RefPath);
+            (JToken? referencedValueAtPath, bool isPending) = _verifier.VerifyRef(refObject, referringObjectRef.RefPath);
+            if (isPending)
+            {
+                // The reference is to a result that's not available yet
+                return false;
+            }
             if (referencedValueAtPath == null)
                 return false;
 
-            JToken sourceValueWithRef = _verifier.VerifyRef(sourceObject.Root, referringObjectRef.SourceValuePath);
+            (JToken? sourceValueWithRef, _) = _verifier.VerifyRef(sourceObject.Root, referringObjectRef.SourceValuePath);
+            if (sourceValueWithRef == null)
+                return false;
+            
             string sourceValueWithRefAsString = sourceValueWithRef.ToString();
             if (sourceValueWithRefAsString.Length == referringObjectRef.RefVariable.Length)
             {
